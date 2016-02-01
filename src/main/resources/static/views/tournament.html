@@ -1,0 +1,77 @@
+<div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li ng-class="header.getClass('/tourney/create')"><a href="#/tourney/create">Create a Tourney</a></li>
+            <li ng-class="header.getClass('/tourney/viewAll')"><a href="#/tourney/viewAll">View all tournaments</a></li>
+          </ul>
+        </div>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-show="header.show('/tourney/create') || editTourney">
+          <h1 class="page-header">{{editorTitle}} a Tourney</h1>
+             <form class="form-horizontal" ng-submit="onSubmit();">   
+                  <div class="form-group">
+                 <div ng-show="message" class="alert alert-success alert-offset-yo col-sm-5">
+                  {{message}}
+                </div>
+                <div ng-show="error" class="alert alert-danger alert-offset-yo col-sm-5">
+                  {{error}}
+                </div>
+                 </div> 
+                 <div class="form-group">
+                  <div class="col-sm-4">
+                    <input type="text" ng-model="tournament.tournamentName" class="form-control" placeholder="Tournament Name" required>  
+                  </div>
+                </div>
+                 <div class="form-group">
+                  <div class="col-sm-4">
+                    <input type="text" ng-model="tournament.organiserName" class="form-control" placeholder="Organiser Name" required>
+                  </div>
+                </div>
+                 <div class="form-group">
+                  <div class="col-sm-4">
+                    <input type="text" ng-model="tournament.companyName" class="form-control" placeholder="Company Name" required>
+                  </div>
+                </div>
+                 <!--<div class="form-group">
+                  <div class="col-sm-3">
+                    <input type="number" ng-model="tournament.eventCount" class="form-control" placeholder="Number of events" min="0" data-bind="value:replyNumber" required/> 
+                  </div>
+                </div>-->
+                 <button type="submit" class="input-group btn btn-primary"><span class="glyphicon glyphicon-upload"></span>   {{editorTitle}}</button>
+          </form>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-show="header.show('/tourney/viewAll') && !editTourney">
+          <h1 class="page-header">View all tournaments</h1>
+            <div class="row">
+                 <div ng-show="message" class="alert alert-success alert-offset-yo col-sm-5">
+                  {{message}}
+                </div>
+                <div ng-show="error" class="alert alert-danger alert-offset-yo col-sm-5">
+                  {{error}}
+                </div>
+            </div>      
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Tournament Name</th>
+                    <th>Organiser Name</th>
+                    <th>Company Name</th>
+                    <th>Edit</th>  
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="tournament in tournaments">
+                    <td>{{tournament.tournamentName}}</td>
+                    <td>{{tournament.organiserName}}</td>
+                    <td>{{tournament.companyName}}</td>
+                    <td>
+                        <button class="btn" ng-click="editTournament(tournament)">
+                            <span class="glyphicon glyphicon-pencil"></span>  Edit
+                        </button>
+                    </td>  
+                  </tr>
+                </tbody>
+              </table>
+    </div>
+</div>

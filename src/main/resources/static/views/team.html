@@ -1,0 +1,159 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li ng-class="header.getClass('/team/create')"><a href="#/team/create">Create a Team</a></li>
+                <li ng-class="header.getClass('/team/viewTeam')"><a href="#/team/viewTeam">View Teams in an Event</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-show="header.show('/team/create') || editTeamBoolean">
+        <h1 class="page-header">{{editorTitle}} a Team</h1>
+        <form class="form-horizontal" ng-submit="onSubmit()" novalidate>
+            <div class="form-group">
+                <div ng-show="message" class="alert alert-success col-sm-5 alert-offset-yo">
+                    {{message}}
+                </div>
+                <div ng-show="error" class="alert alert-danger col-sm-5 alert-offset-yo">
+                    {{error}}
+                </div>
+            </div>
+            <div ng-hide="!teamMode" class="form-slider-slide-left col-sm-6" ng-class="{active : checked}">
+
+                <div class="form-group">
+                    <div class="col-sm-8">
+                        <select class="form-control" ng-model="team.tournamentId" ng-change="getEventsForTournament()">
+                            <option value="">--Select a tournament--</option>
+                            <option ng-repeat="tournament in tournaments" value="{{tournament.tournamentId}}">{{tournament.tournamentName}}</option>
+                        </select>
+                        <!--<input type="text" ng-model="event.name" class="form-control" placeholder="Event Name" required>  -->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-8">
+                        <select class="form-control" ng-model="team.event">
+                            <option value="">--Select an event--</option>
+                            <option ng-repeat="event in events" value="{{event}}">{{event.eventName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-8">
+                        <input type="text" ng-model="team.teamName" class="form-control" placeholder="Team Name" required>
+                    </div>
+                </div>
+                <button type="button" class="input-group btn btn-primary" ng-click="toggle()"><span class="glyphicon glyphicon-upload"></span> Create Players</button>
+            </div>
+            <div ng-show="playerMode" class="form-slider-slide-right col-sm-6">
+                <button type="button" class="input-group btn btn-warning" ng-click="toggle()"><span class="glyphicon glyphicon-upload"></span> Edit team info</button>
+                <h2>Add players</h2>
+                <table class="table table-striped">
+                    <tbody>
+                        <tr ng-repeat="player in players">
+                            <td>{{ player.playerName }}</td>
+                            <td>
+                                <button class="btn" ng-click="editPlayer(player)">
+                                    <span class="glyphicon glyphicon-pencil"></span>  Edit
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn" ng-click="removePlayer(player)">
+                                    <span class="glyphicon glyphicon-remove"></span>  Remove
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="button" class="input-group btn btn-success" ng-click="addNewPlayer()"><span class="glyphicon glyphicon-plus-sign"></span> Add</button>
+                <br/>
+                <div ng-show="addNew">
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <input type="text" ng-model="player.playerName" class="form-control" placeholder="Player Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <input type="number" min="1" max="10" ng-model="player.expertiseLevel" class="form-control" placeholder="Expertise Level" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <input type="number" min="1" max="10" ng-model="player.experienceLevel" class="form-control" placeholder="Experience Level" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <input type="number" min="1" max="10" ng-model="player.popularityLevel" class="form-control" placeholder="Popularity Level" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <input type="number" min="10" ng-model="player.height" class="form-control" placeholder="Height" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <input type="number" min="10" ng-model="player.weight" class="form-control" placeholder="Weight" required>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" ng-click="savePlayer()">
+                        <span class="glyphicon glyphicon-save"></span>  Save
+                    </button>
+                </div>
+                <button type="submit" class="btn btn-primary" ng-show="enableSubmit" ng-click="onSubmit()">
+                    <span class="glyphicon glyphicon-upload"></span>  Submit
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-show="header.show('/team/viewTeam') && !editTeamBoolean">
+          <h1 class="page-header">View Teams in an Event</h1>
+        <div class="row" ng-show="message || error">
+                <div ng-show="message" class="alert alert-success col-sm-5 alert-offset-yo">
+                    {{message}}
+                </div>
+                <div ng-show="error" class="alert alert-danger col-sm-5 alert-offset-yo">
+                    {{error}}
+                </div>
+            </div>
+            <div class="row form-group">
+                  <div class="col-sm-4">
+                    <select class="form-control" ng-model="viewTeam.tournamentId" ng-change="getEventsForTournament()">
+                        <option value="">--Select a tournament--</option>
+                        <option ng-repeat="tournament in tournaments" value="{{tournament.tournamentId}}">{{tournament.tournamentName}}</option>
+                    </select>
+                  </div>
+             </div>
+            
+             <div class="row form-group">
+                  <div class="col-sm-4">
+                    <select class="form-control" ng-model="viewTeam.eventId" ng-change="getTeamsInEvent()" ng-show="events">
+                        <option value="">--Select an event--</option>
+                        <option ng-repeat="event in events" value="{{event.eventId}}">{{event.eventName}}</option>
+                    </select>
+                  </div>
+             </div>    
+             <br/><br/><br/><br/>
+             <table class="table table-striped" ng-show="teams">
+                <thead>
+                  <tr>
+                    <th>Team Name</th>
+                    <th>Captain Name</th>
+                    <th>Edit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="team in teams">
+                    <td>{{team.teamName}}</td>
+                    <td>{{team.players[0].playerName}}</td>
+                    <td>
+                        <button class="btn" ng-click="editTeam(team)">
+                            <span class="glyphicon glyphicon-pencil"></span>  Edit
+                        </button>
+                    </td> 
+                  </tr>
+                </tbody>
+              </table>
+    </div>
+</div>

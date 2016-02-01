@@ -1,0 +1,54 @@
+<div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li ng-class="header.getClass('/schedule')"><a href="#/schedule">Schedule an Event</a></li>
+          </ul>
+        </div>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-show="header.show('/schedule')">
+          <h1 class="page-header">Schedule an Event</h1>
+             <form class="form-horizontal" ng-submit="onSubmit();">
+                <div class="form-group">
+                 <div ng-show="message" class="alert alert-success col-sm-5 alert-offset-yo">
+                  {{message}}
+                </div>
+                <div ng-show="error" class="alert alert-danger col-sm-5 alert-offset-yo">
+                  {{error}}
+                </div>
+                 </div>
+                 <div class="form-group">
+                  <div class="col-sm-4">
+                    <select class="form-control" ng-model="schedule.tournamentId" ng-change="getEventsForTournament()" required>
+                        <option value="">--Select a tournament--</option>
+                        <option ng-repeat="tournament in tournaments" value="{{tournament.tournamentId}}">{{tournament.tournamentName}}</option>
+                    </select>
+                    <!--<input type="text" ng-model="event.name" class="form-control" placeholder="Event Name" required>  -->
+                  </div>
+                </div>
+                 <div class="form-group" ng-show="events">
+                  <div class="col-sm-4">
+                    <select class="form-control" ng-model="schedule.event" required>
+                        <option value="">--Select an event--</option>
+                        <option ng-repeat="event in events" value="{{event}}">{{event.eventName}}</option>
+                    </select>
+                    <!--<input type="text" ng-model="event.name" class="form-control" placeholder="Event Name" required>  -->
+                  </div>
+                </div>
+                <!--<div class="form-group" ng-show="events">
+                  <div class="col-sm-3">
+                    <input type="number" ng-model="schedule.matchCount" class="form-control" placeholder="Number of matches/day" min="0" data-bind="value:replyNumber" required/> 
+                  </div>
+                </div>
+                 <div class="form-group" ng-show="events">
+                  <div class="col-sm-4">
+                    <select class="form-control" ng-model="schedule.scrutiny">
+                        <option value="">--Select Scrutiny Level--</option>
+                        <option ng-repeat="scrutiny in scrutinies" value="{{scrutiny}}">{{scrutiny}}</option>
+                    </select>
+                    </div>
+                </div>-->
+                 <button type="submit" class="input-group btn btn-success"><span class="glyphicon glyphicon-calendar"></span>   Schedule</button>
+          </form>
+    </div>
+</div>

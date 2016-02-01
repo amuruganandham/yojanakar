@@ -1,0 +1,21 @@
+
+    <div class="container">
+
+      <form class="form-signin" ng-submit="onSubmit();">
+        
+        <img src="images/Logo.png"/>
+        <br/>  
+        <label for="user.name" class="sr-only">Email address</label>
+        <input type="text" ng-model="user.name" class="form-control" placeholder="User name/ Email address" required autofocus>
+        <br/>
+        <label for="user.pass" class="sr-only">Password</label>
+        <input type="password" ng-model="user.pass" class="form-control" placeholder="Password" required>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me" ng-model="user.remember"> Remember me
+          </label>
+        </div>
+        <button class="btn btn-lg btn-success btn-block" type="submit">Sign in</button>
+      </form>
+
+    </div>

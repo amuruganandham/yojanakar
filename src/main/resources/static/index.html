@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html lang="en" ng-app="yojanakar">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <!--<link rel="icon" href="images/favicon.ico" />-->
+    <title>Yojanakar</title>
+    <meta name="description" content="Tournaments, events & teams creation, schedule matches and view fixtures">
+    
+    <script src="scripts/angular.js"></script>
+    <script src="scripts/angular-route.js"></script>
+    <script src="scripts/angular-animate.js"></script>
+    <script src="scripts/jquery.js"></script>
+    <script src="scripts/bootstrap.js"></script>
+    <script src="scripts/ui-bootstrap-tpls-0.14.2.js"></script>
+    <script src="scripts/angular-filter.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/service/HighlighterService.js"></script>
+    <script src="scripts/service/YojanakarService.js"></script>
+    <script src="scripts/controller/LoginCtrl.js"></script>
+    <script src="scripts/controller/HeaderCtrl.js"></script>
+    <script src="scripts/controller/TourneyCtrl.js"></script>
+    <script src="scripts/controller/EventCtrl.js"></script>
+    <script src="scripts/controller/TeamCtrl.js"></script>
+    <script src="scripts/controller/ScheduleCtrl.js"></script>
+    <script src="scripts/controller/FixtureCtrl.js"></script>
+    
+    
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <link rel="stylesheet" href="css/bootstrap-theme.css"/>
+    <link rel="stylesheet" href="css/animate.css"/>
+    <link rel="stylesheet" href="css/signin.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/fixture.css">
+    <style>
+    .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+    .alert-offset-yo{margin-left:11px;}
+    .jumbotron{background-color: #fff; border-radius: 25px; border: 2px solid #eee; margin-top:20px;}
+    .col-xs-offset-half{margin-left: 4.16666666%;}
+    .btn a {color : inherit; text-decoration: none;}
+    .form-slider-slide-left.ng-hide-add{ animation:0.5s slideOutLeft ease;}
+    .form-slider-slide-left.ng-hide-remove{ animation:0.5s slideInLeft ease; }
+    .form-slider-slide-right.ng-hide-add{ animation:0.5s slideOutRight ease;}
+    .form-slider-slide-right.ng-hide-remove{ animation:0.5s slideInRight ease; }    
+    .form-slider-slide-up.ng-hide-add{ animation:0.5s slideOutUp ease;}
+    .form-slider-slide-up.ng-hide-remove{ animation:0.5s slideInUp ease; }    
+    </style>
+</head>
+<body class="ng-cloak" ng-controller="HeaderCtrl as header">
+<!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" ng-show="user || header.show('/fixture')">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#/home">
+            <!--<img alt="Yojanakar" title="Yojanakar" src="images/yoganakaar_symbol.png" style="margin-top:-3px;">--> Yojanakar
+          </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li ng-class="header.getClass('/tourney')"><a href="#/tourney/create">Tournament</a></li>
+            <li ng-class="header.getClass('/event')"><a href="#/event/create">Event</a></li>
+            <li ng-class="header.getClass('/team')"><a href="#/team/create">Team</a></li>
+            <li ng-class="header.getClass('/schedule')"><a href="#/schedule">Scheduler</a></li>  
+            <li ng-class="header.getClass('/fixture')"><a href="#/fixture">Fixture</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+               <li ng-class="header.getClass('/about')"><a href="#/about">About</a></li>
+              <li ng-class="header.getClass('/contact')"><a href="#/contact">Contact Us</a></li>
+            <li><a href="#/login">Logout</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    <div ng-view></div>
+    
+</body>
+</html>

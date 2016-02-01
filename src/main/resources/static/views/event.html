@@ -1,0 +1,109 @@
+<div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li ng-class="header.getClass('/event/create')"><a href="#/event/create">Create an Event</a></li>
+            <li ng-class="header.getClass('/event/viewEvents')"><a href="#/event/viewEvents">View Events in a Tourney</a></li>
+          </ul>
+        </div>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-show="header.show('/event/create') || editEventBoolean">
+          <h1 class="page-header">{{editorTitle}} an event</h1>
+             <form class="form-horizontal" ng-submit="onSubmit();">
+                <div class="form-group">
+                 <div ng-show="message" class="alert alert-success col-sm-5 alert-offset-yo">
+                  {{message}}
+                </div>
+                <div ng-show="error" class="alert alert-danger col-sm-5 alert-offset-yo">
+                  {{error}}
+                </div>
+                 </div>
+                 <div class="form-group">
+                  <div class="col-sm-4">
+                    <select class="form-control" ng-model="event.tournamentId" required>
+                        <option value="">--Select a tournament--</option>
+                        <option ng-repeat="tournament in tournaments" value="{{tournament.tournamentId}}">{{tournament.tournamentName}}</option>
+                    </select>
+                    <!--<input type="text" ng-model="event.name" class="form-control" placeholder="Event Name" required>  -->
+                  </div>
+                </div>
+                 <div class="form-group">
+                  <div class="col-sm-4">
+                    <input type="text" ng-model="event.eventName" class="form-control" placeholder="Event Name" required>  
+                  </div>
+                </div>
+                 <div class="form-group">
+                  <div class="col-sm-4">
+                    <select class="form-control" ng-model="event.eventType" required>
+                        <option value="">--Select an Event Type--</option>
+                        <option value="KO">Knock Out</option>
+                        <option value="GR">Grouping</option>
+                    </select>
+                    <!--<input type="text" ng-model="event.name" class="form-control" placeholder="Event Name" required>  -->
+                  </div>
+                 </div> 
+                 <div class="form-group">
+                  <div class="col-sm-4">
+                    <input type="text" ng-model="event.organiserName" class="form-control" placeholder="Co-ordinator Name" required>
+                  </div>
+                </div>
+                 <div class="form-group">
+                  <div class="col-sm-3">
+                    <input type="number" ng-model="event.playersPerTeam" class="form-control" placeholder="Number of players/team" min="0" data-bind="value:replyNumber" required/> 
+                  </div>
+                </div>
+                 <div class="form-group">
+                  <div class="col-sm-3">
+                    <input type="number" ng-model="event.matchesPerDay" class="form-control" placeholder="Number of matches/day" min="0" data-bind="value:replyNumber" required/> 
+                  </div>
+                </div>
+                 <button type="submit" class="input-group btn btn-primary"><span class="glyphicon glyphicon-upload"></span>   {{editorTitle}}</button>
+          </form>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-show="header.show('/event/viewEvents') && !editEventBoolean">
+          <h1 class="page-header">View all events</h1>
+            <div class="row">
+                 <div ng-show="message" class="alert alert-success col-sm-5 alert-offset-yo">
+                  {{message}}
+                </div>
+                <div ng-show="error" class="alert alert-danger col-sm-5 alert-offset-yo">
+                  {{error}}
+                </div>
+                 </div>
+             <div class="row">
+                  <div class="col-sm-4">
+                    <select class="form-control" ng-model="viewEvent.tournamentId" ng-change="getEventsForTournament()">
+                        <option value="">--Select a tournament--</option>
+                        <option ng-repeat="tournament in tournaments" value="{{tournament.tournamentId}}">{{tournament.tournamentName}}</option>
+                    </select>
+                  </div>
+             </div>
+             <br/><br/><br/><br/>
+             <table class="table table-striped" ng-show="events">
+                <thead>
+                  <tr>
+                    <th>Event Name</th>
+                    <th>Co-ordinator Name</th>
+                    <th>Event Type</th>  
+                    <th>Players/Team</th>
+                    <th>Matches/Day</th>  
+                    <th>Edit</th>  
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="event in events">
+                    <td>{{event.eventName}}</td>
+                    <td>{{event.organiserName}}</td>
+                    <td>{{event.eventType}}</td>
+                    <td>{{event.playersPerTeam}}</td>
+                    <td>{{event.matchesPerDay}}</td>
+                    <td>
+                    <button class="btn" ng-click="editEvent(event)">
+                      <span class="glyphicon glyphicon-pencil"></span>  Edit
+                    </button>
+                    </td>  
+                  </tr>
+                </tbody>
+              </table>
+    </div>
+</div>

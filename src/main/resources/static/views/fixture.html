@@ -1,0 +1,90 @@
+
+<div algin="center">
+    <div class="form-group">
+                    <div class="col-sm-2">
+                        <select class="form-control" ng-model="fixture.tournamentId" ng-change="getEventsForTournament()">
+                            <option value="">--Select a tournament--</option>
+                            <option ng-repeat="tournament in tournaments" value="{{tournament.tournamentId}}">{{tournament.tournamentName}}</option>
+                        </select>
+                        <!--<input type="text" ng-model="event.name" class="form-control" placeholder="Event Name" required>  -->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <select class="form-control" ng-model="fixture.eventId" ng-change = "">
+                            <option value="">--Select an event--</option>
+                            <option ng-repeat="event in events" value="{{event.eventId}}">{{event.eventName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <select class="form-control" ng-model="fixture.stage" ng-change="getStagesForFixutre()">
+                            <option value="">--Select a stage--</option>
+                            <option ng-repeat="stage in noOfStages" value="{{stage}}">{{stage}}</option>
+                        </select>
+                    </div>
+                </div>
+</div>
+<br/>
+<div class="row" algin="center" style="margin:5px;">
+         <h2>&nbsp;Stage {{stage}}</h1>
+    </div>
+   <div class="row" algin="center" style="margin:5px;">  
+      
+<div class="container-fluid">
+    
+
+<!--<div class="jumbotron">
+        <div ng-repeat="(key, value) in schedules | groupBy: 'day'">
+        <button  class="btn btn-info btn-lg" data-ng-click="showdayclick(key)">Day -{{ key }}</button> 
+        </div>    
+</div>-->
+    <div class="col-md-5">
+    <div class="panel panel-default">
+        <div class="panel-heading">Schedule Days</div>
+        <div class="panel-body">
+            <div class="btn-group" style="margin-left : 5px; margin-top : 5px;"ng-repeat="(key, value) in schedules | groupBy: 'day'">
+        <button  class="btn btn-primary btn-lg btn-3d" data-ng-click="showdayclick(key)">Day -{{ key }}</button> 
+        </div>
+        </div>
+        </div>
+  </div>
+       <!-- <div class="col-xs-6  main">
+         
+    
+ 
+      <div class="threed" ng-repeat="(key, value) in schedules | groupBy: 'day'" >
+         <button  class="btn btn-default btn-lg" data-ng-click="showdayclick(key)" ><h3   >&nbsp;Day -{{ key }}</h3></span>
+      
+     
+ 
+</div>
+        </div>-->
+
+     
+    <div class="col-xs-6" >
+
+  
+   
+      
+      <div class="threed form-slider-slide-right" style="padding:1em;background-color:#fff; margin:5px; float:left" 
+         ng-repeat="(key, value) in schedules | where:{day: shwday}  | groupBy: 'day'" >
+         <h3 class="page-header ng-binding">&nbsp;Day -{{ key }}!</h3>
+         <div class="row" style="margin:5px;" ng-repeat="daywise in value">	
+            <button class="btn btn-default btn-lg btn3d"> {{daywise.teamIds[0] }} </button>
+            <button type="button" class="btn btn-danger btn-circle btn-lg  btn3d" style="margin:5px 10px">Vs</button>
+            <button class="btn btn-default btn-lg btn3d">{{ daywise.teamIds[1]}}</button>
+             <!--<button class="btn btn-default btn-lg btn3d" ng-style="{'height': {{(10-value.length)*15}}+'px',
+               'min-width': '150px','max-width': '500px',
+               'min-height': '50px','max-height': '150px'}"> {{daywise.teamIds[0] }} </button>
+            <button type="button" class="btn btn-danger btn-circle btn-lg  btn3d" style="margin:5px 10px">Vs</button>
+            <button class="btn btn-default btn-lg btn3d"  ng-style="{'height': {{(10-value.length)*15}}+'px',
+               'min-width': '150px','max-width': '500px',
+               'min-height': '50px','max-height': '150px'}">{{ daywise.teamIds[1]}}</button>-->
+         </div>
+      </div>
+</div>
+
+             </div>
+  </div>
